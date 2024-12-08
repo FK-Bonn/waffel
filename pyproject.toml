@@ -1,0 +1,7 @@
+[project]
+name = "waffel"
+version = "0.1.0"
+description = "Wählendenverzeichnisse, AFSG-Zahlen und Fach-Abschluss-Kombinationen Fabrizieren, Extrahieren und Liefern"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ['reportlab']
