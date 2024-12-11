@@ -1,0 +1,7 @@
+#! /bin/bash
+
+set -eux
+
+ruff check src
+python -m mypy ./src
+python -m pytest --cov=src --cov-report=html --cov-config=pyproject.toml ./

@@ -4,4 +4,28 @@ version = "0.1.0"
 description = "Wählendenverzeichnisse, AFSG-Zahlen und Fach-Abschluss-Kombinationen Fabrizieren, Extrahieren und Liefern"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ['reportlab']
+dependencies = [
+    "reportlab==4.2.5",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13.0",
+    "pytest-cov>=6.0.0",
+    "pytest>=8.3.4",
+    "ruff>=0.8.2",
+    "types-reportlab>=4.2.5.20241002",
+]
+
+[project.scripts]
+waffel = "waffel.main:main"
+
+[tool.ruff]
+line-length = 120
+
+[tool.coverage.run]
+omit = ['tests/*']
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
