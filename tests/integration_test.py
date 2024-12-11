@@ -26,7 +26,7 @@ class TestIntegration:
         assert "waffel: error: argument --date: not a valid date: '1.1.2025'. Use format: YYYY-MM-DD" in result.stderr
 
 
-def run_waffel(folder: Path, date: str = '2024-12-24', succeeds=False) -> CompletedProcess:
+def run_waffel(folder: Path, date: str = '2024-12-24', succeeds=True) -> CompletedProcess:
     return run(['waffel',
                 '--students-csv', str(folder / 'students.csv'),
                 '--mapping', str(folder / 'fachschaftenliste.md'),
