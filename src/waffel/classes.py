@@ -9,10 +9,13 @@ class FAK:
     @classmethod
     def from_dict(cls, line: dict) -> list['FAK']:
         faks = []
-        for degree_index in range(1, 6):
+        for degree_index in range(1, 4):
             for subject_index in range(1, 4):
-                degree = line[f'degree_{degree_index}']
-                subject = line[f'degree_{degree_index}_subject_{subject_index}']
+                # degree_id = line[f'abschluss{degree_index}']
+                degree = line[f'abschluss{degree_index}dtxt']
+                # subject_id = line[f'fach{degree_index}{subject_index}']
+                key = f'fach{degree_index}{subject_index}dtxt'
+                subject = line[key]
                 if degree and subject:
                     faks.append(FAK(degree=degree, subject=subject))
         return faks
@@ -44,8 +47,8 @@ class Student:
     @classmethod
     def from_dict(cls, line: dict) -> 'Student':
         return Student(
-            first_names=line['first_names'],
-            given_names=line['given_names'],
-            matriculation_number=line['matriculation_number'],
+            first_names=line['vorname'],
+            given_names=line['nachname'],
+            matriculation_number=line['mtknr'],
             faks=FAK.from_dict(line),
         )

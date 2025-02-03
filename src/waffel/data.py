@@ -1,8 +1,12 @@
 import csv
+import locale
 from pathlib import Path
 
 from waffel.classes import Student, FAK
 
+
+def collator_sort_key(stud: Student) -> tuple[str, str]:
+    return locale.strxfrm(stud.given_names), locale.strxfrm(stud.first_names)
 
 def load_students(students_csv: Path) -> list[Student]:
     students = []
@@ -10,7 +14,8 @@ def load_students(students_csv: Path) -> list[Student]:
         reader = csv.DictReader(f, delimiter=';')
         for line in reader:
             students.append(Student.from_dict(line))
-    students = list(sorted(students, key=lambda s: (s.given_names, s.first_names)))
+    locale.setlocale(locale.LC_COLLATE, 'de_DE.utf8')
+    students = list(sorted(students, key=collator_sort_key))
     return students
 
 
