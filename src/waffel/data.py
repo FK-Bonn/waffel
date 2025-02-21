@@ -43,11 +43,12 @@ def load_mapping(mapping_md: Path) -> dict[str, list[FAK]]:
     return data
 
 
-def write_new_faks(output_directory: Path, students: list[Student], mapping: dict[str, list[FAK]]):
+def write_new_faks(output_directory: Path, students: list[Student], mapping: dict[str, list[FAK]]) -> list[str]:
     output_file = output_directory / 'unknown_faks.txt'
     new_fak_strings = determine_new_faks(mapping, students)
     print(f'Writing {len(new_fak_strings)} new FAKs to {output_file}')
     output_file.write_text('\n'.join(new_fak_strings))
+    return new_fak_strings
 
 
 def determine_new_faks(mapping: dict[str, list[FAK]], students: list[Student]) -> list[str]:
