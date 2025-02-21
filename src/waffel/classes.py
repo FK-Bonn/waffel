@@ -42,6 +42,7 @@ class Student:
     first_names: str
     given_names: str
     matriculation_number: str
+    semester: str
     faks: list[FAK]
 
     @classmethod
@@ -50,5 +51,6 @@ class Student:
             first_names=line['vorname'],
             given_names=line['nachname'],
             matriculation_number=line['mtknr'],
+            semester=line['semester'],
             faks=FAK.from_dict(line),
         )

@@ -4,7 +4,7 @@ import locale
 import shutil
 from pathlib import Path
 
-from waffel.data import load_students, load_mapping, write_new_faks
+from waffel.data import load_students, load_mapping, write_new_faks, filter_students_for_semester
 from waffel.pdf import write_electoral_registers, register_fonts
 
 
@@ -38,4 +38,5 @@ def main():
     mapping = load_mapping(args.mapping)
     prepare_output_directory(args.output_directory)
     write_new_faks(args.output_directory, students, mapping)
+    students = filter_students_for_semester(students, args.date)
     write_electoral_registers(args.date, args.output_directory, mapping, students)

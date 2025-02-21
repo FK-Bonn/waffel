@@ -21,3 +21,6 @@ Anglistik, Amerikanistik und Keltologie
   * Anglistik/Amerikanistik: Literatur- und Kulturwissenschaft (Promotion)
   * Anglistik/Amerikanistik: Sprachwissenschaft (Promotion)
 
+Lehramt
+-------
+  * Bildungswissenschaften (LA MA Berufskolleg)

@@ -1,5 +1,6 @@
 import csv
 import locale
+import datetime
 from pathlib import Path
 
 from waffel.classes import Student, FAK
@@ -61,3 +62,14 @@ def determine_new_faks(mapping: dict[str, list[FAK]], students: list[Student]) -
     new_faks = student_faks - assigned_faks
     new_fak_strings = sorted(str(fak) for fak in new_faks)
     return new_fak_strings
+
+def filter_students_for_semester(students: list[Student], date: datetime.date) -> list[Student]:
+    year = date.year
+    semester_index = 1
+    if date.month >= 10:
+        semester_index = 2
+    elif date.month < 4:
+        semester_index = 2
+        year -= 1
+    semester = f'{year}{semester_index}'
+    return [s for s in students if s.semester == semester]

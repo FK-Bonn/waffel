@@ -1,7 +1,11 @@
 import csv
+import datetime
 from pathlib import Path
 
-from waffel.data import load_students
+import pytest
+
+from waffel.classes import Student
+from waffel.data import load_students, filter_students_for_semester
 
 
 class TestData:
@@ -79,6 +83,25 @@ class TestData:
         items = [(s.first_names, s.given_names) for s in result]
         assert items == list(reversed(names))
 
+    @pytest.mark.parametrize('date_string, matriculation_number', [
+        ['2024-04-01','1'],
+        ['2024-09-30','1'],
+        ['2024-10-01','2'],
+        ['2025-03-31','2'],
+        ['2025-04-01','3'],
+        ['2025-09-30','3'],
+    ])
+    def test_filter_students(self, date_string, matriculation_number):
+        students = [
+            Student(first_names='A', given_names='a', semester='20241', matriculation_number='1', faks=[]),
+            Student(first_names='B', given_names='b', semester='20242', matriculation_number='2', faks=[]),
+            Student(first_names='C', given_names='c', semester='20251', matriculation_number='3', faks=[]),
+        ]
+
+        result = filter_students_for_semester(students, datetime.date.fromisoformat(date_string))
+        assert len(result) == 1
+        assert result[0].matriculation_number == matriculation_number
+
 
 def create_students_file(names: list[tuple[str, str]], target: Path):
     with target.open('w') as f:
@@ -90,9 +113,11 @@ def create_students_file(names: list[tuple[str, str]], target: Path):
 
 def row(first_names: str, last_names: str) -> dict[str, str]:
     return {
+        'OID_stg': 'deadbeef',
+        'mtknr': '0123456789',
+        'semester': '20242',
         'vorname': first_names,
         'nachname': last_names,
-        'mtknr': '0123456789',
         'abschluss1': '69',
         'abschluss1dtxt': 'degree',
         'fach11': '420',
