@@ -28,6 +28,13 @@ class TestIntegration:
         assert (electoral_registers_folder / 'Wahl-zum-Studierendenparlament.pdf').is_file()
         assert (electoral_registers_folder / 'unknown_faks.txt').read_text().splitlines() == unassigned_faks
         assert (tmp_path / 'output' / 'students-2024-12-24.csv').is_file()
+        funds_distribution = json.loads((electoral_registers_folder / 'funds-distribution.json').read_text())
+        assert funds_distribution == {
+            'Agrarwissenschaften': {'numerator': 1, 'denominator': 2},
+            'Altkatholisches Seminar': {'numerator': 5, 'denominator': 2},
+            'Anglistik, Amerikanistik und Keltologie': {'numerator': 1, 'denominator': 1},
+            'unknown': {'numerator': 1, 'denominator': 1},
+        }
         status = json.loads((tmp_path / 'output' / 'status.json').read_text())
         assert status['last_successful_run'] > before.isoformat()
         assert status['last_successful_run'] < after.isoformat()

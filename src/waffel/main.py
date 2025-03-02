@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 from waffel.data import load_students, load_mapping, write_new_faks, filter_students_for_semester
+from waffel.funds import write_funds_distribution
 from waffel.pdf import write_electoral_registers, register_fonts
 
 
@@ -63,5 +64,6 @@ def main():
     new_faks = write_new_faks(date_directory, students, mapping)
     students = filter_students_for_semester(students, args.date)
     write_electoral_registers(args.date, date_directory, mapping, students)
+    write_funds_distribution(date_directory, mapping, students)
     copy_students_file(args.students_csv, args.output_directory, args.date)
     write_status_json(args.output_directory, new_faks)
